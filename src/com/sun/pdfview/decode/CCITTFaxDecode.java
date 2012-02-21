@@ -1,9 +1,9 @@
 package com.sun.pdfview.decode;
 
+import com.sun.pdfview.PDFObject;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
-import com.sun.pdfview.PDFObject;
 
 public class CCITTFaxDecode {
 
@@ -55,13 +55,17 @@ public class CCITTFaxDecode {
 			} else if (k < 0) {
 				decoder.decodeT6(destination, source, 0, rows);
 			}
-		}catch (Exception e) {
+		}catch (RuntimeException e) {
 			System.out.println("Error decoding CCITTFax image k: "+ k);
-			// some PDf producer don't correctly assign a k value for the deocde,
-			// as  result we can try one more time using the T6.
-			//first, reset buffer
-			destination = new byte[size];
-			decoder.decodeT6(destination, source, 0, rows);
+            if (k >= 0) {
+                // some PDf producer don't correctly assign a k value for the deocde,
+                // as  result we can try one more time using the T6.
+                //first, reset buffer
+                destination = new byte[size];
+                decoder.decodeT6(destination, source, 0, rows);
+            } else {
+                throw e;
+            }
 		}
 		if (!getOptionFieldBoolean(dict, "BlackIs1", false)) {
 			for (int i = 0; i < destination.length; i++) {
