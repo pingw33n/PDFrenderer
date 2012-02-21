@@ -1,0 +1,7 @@
+#!/bin/sh
+
+VERSION=1.0-SNAPSHOT
+
+ant && \
+mvn install:install-file -Dfile=stdclasses/unpublic/jbig2.jar  -DgroupId=org.jpedal.jbig2 -DartifactId=jbig2-decoder -Dversion=1.0 -Dpackaging=jar && \
+mvn install:install-file -Dfile=pdf-renderer-p.jar -DgroupId=com.sun.pdfview -DartifactId=pdf-renderer-p -Dversion=$VERSION -Dpackaging=jar -DpomFile=pdf-renderer-p.pom
