@@ -25,7 +25,7 @@
 	
 	<target name="jar" depends="compile">
 		<!-- Build the jar file -->
-		<jar destfile="PDFrenderer.jar">
+		<jar destfile="pdf-renderer-p.jar">
 			<fileset dir="${build}" />
 			<fileset dir="stdclasses" excludes="unpublic/jbig2.jar" />
 		</jar>
